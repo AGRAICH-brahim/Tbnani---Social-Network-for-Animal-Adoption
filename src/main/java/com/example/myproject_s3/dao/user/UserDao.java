@@ -2,6 +2,7 @@ package com.example.myproject_s3.dao.user;
 
 import com.example.myproject_s3.entities.UserEntity;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,5 +12,6 @@ public interface UserDao {
     ArrayList<UserEntity> getAllUsers();
     void updateUser(UserEntity user);
     void deleteUser(Long userId);
-    boolean isValidUser(String username, String password);
+    UserEntity isValidUser(String email, String password) throws SQLException;
+    public boolean isExist(String email) throws SQLException;
 }

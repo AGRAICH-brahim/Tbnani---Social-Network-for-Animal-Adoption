@@ -8,28 +8,91 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>signup</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="./css/signup.css">
 </head>
 <body>
-<h2>Add User</h2>
-<form action="signup" method="post">
-    <label for="nom">Nom:</label>
-    <input type="text" id="nom" name="nom" required><br>
-    <input type="text" id="prenom" name="prenom" required><br>
-    <input type="text" id="email" name="email" required><br>
-    <input type="date" id="datedenaissance" name="datedenaissance" required><br>
-    <input type="text" id="age" name="age" required><br>
-    <input type="text" id="sex" name="sex" required><br>
-    <input type="text" id="tel" name="tel" required><br>
-    <input type="text" id="adresse" name="adresse" required><br>
-    <input type="text" id="username" name="username" required><br>
-    <input type="text" id="password" name="password" required><br>
-    <input type="text" id="type" name="type" required><br>
 
-    <!-- Ajoutez d'autres champs du formulaire pour les attributs de l'utilisateur -->
+<div class="container1">
+    <div class="creer"><h1>Créer Votre Compte</h1>
+        <div class="text-danger text-center">
+            <p class=""> ${message}</p>
+        </div>
+    </div>
+    <div class="container11">
+        <div class="form-container">
 
-    <button type="submit">Add User</button>
-</form>
+            <p class="title"><a href="index.jsp"><img src="./css/images/LOGO.png" alt="logo"></a>Personnal informations</p>
+            <form class="form"  action="signup" method="post">
+                <div class="groupe">
+                    <div class="input-group">
+                        <label for="nom">Nom</label>
+                        <input type="text" name="nom" id="nom" placeholder="">
+                    </div>
+                    <div class="input-group">
+                        <label for="prenom">Prenom</label>
+                        <input type="text" name="prenom" id="prenom" placeholder="">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="datedenaissance">Date de naissance</label>
+                    <input type="date" name="datedenaissance" id="datedenaissance" placeholder="">
+                </div>
+                <div class="input-group">
+                    <label >Sex</label>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="gender" value="M"> Masculin
+                        </label>
+                        <label>
+                            <input type="radio" name="gender" value="F"> Féminin
+                        </label>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="telephone">Téléphone</label>
+                    <input type="text" name="telephone" id="telephone" placeholder="">
+                </div>
+                <div class="input-group">
+                    <label for="adresse">Addresse</label>
+                    <input type="text" name="adresse" id="adresse" placeholder="">
+                </div>
+
+        </div>
+
+        <div class="form-container">
+
+            <p class="title"><a href="index.jsp"><img src="./css/images/LOGO.png" alt="logo"></a>Acount informations</p>
+
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="text" name="email" id="email" placeholder="">
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" placeholder="">
+            </div>
+            <div class="input-group">
+                <label for="Confirmepassword">Confirme Password</label>
+                <input type="password" name="Confirmepassword" id="Confirmepassword" placeholder="">
+                <div class="forgot">
+                    <a rel="noopener noreferrer" href="#">Forgot Password ?</a>
+                </div>
+            </div>
+            <button class="sign">Sign in</button>
+            </form>
+
+            <div>
+                <p class="signup">Alredy have an acount :
+                    <a rel="noopener noreferrer" href="login" class="">log in</a>
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

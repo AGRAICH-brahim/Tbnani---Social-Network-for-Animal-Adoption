@@ -16,6 +16,7 @@ public class UserDaoImp implements UserDao {
     private DAOFactory daoFactory;
 
     public UserDaoImp(DAOFactory daoFactory) {
+
         this.daoFactory = daoFactory;
     }
     private static UserEntity map( ResultSet resultSet ) throws SQLException {
@@ -27,10 +28,8 @@ public class UserDaoImp implements UserDao {
         userEntity.setEmail(resultSet.getString("email"));
         userEntity.setDateNaissance(resultSet.getDate("date_naissance"));
         userEntity.setSex(resultSet.getString("sex"));
-        userEntity.setAge(resultSet.getInt("age"));
         userEntity.setTelephone(resultSet.getString("telephone"));
         userEntity.setAdresse(resultSet.getString("adresse"));
-        userEntity.setUsername(resultSet.getString("username"));
         userEntity.setPassword(resultSet.getString("password"));
         userEntity.setDateTime(resultSet.getTimestamp("date_time"));
         userEntity.setTypeUser(resultSet.getString("type_user"));
@@ -57,7 +56,7 @@ public class UserDaoImp implements UserDao {
             connection = daoFactory.getConnection();
 
             // Requête SQL d'insertion
-            String sql = "INSERT INTO user (nom, prenom, email, date_naissance, sex, age, telephone, adresse, username, password, date_time, type_user) " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO user (nom, prenom, email, date_naissance, sex, telephone, adresse, password, date_time, type_user) " + "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             // Préparer la requête avec les valeurs de l'utilisateur
             preparedStatement = connection.prepareStatement(sql);
@@ -66,13 +65,11 @@ public class UserDaoImp implements UserDao {
             preparedStatement.setString(3, user.getEmail());
             preparedStatement.setDate(4, user.getDateNaissance());
             preparedStatement.setString(5, user.getSex());
-            preparedStatement.setInt(6, user.getAge());
-            preparedStatement.setString(7, user.getTelephone());
-            preparedStatement.setString(8, user.getAdresse());
-            preparedStatement.setString(9, user.getUsername());
-            preparedStatement.setString(10, user.getPassword());
-            preparedStatement.setTimestamp(11, user.getDateTime());
-            preparedStatement.setString(12, user.getTypeUser());
+            preparedStatement.setString(6, user.getTelephone());
+            preparedStatement.setString(7, user.getAdresse());
+            preparedStatement.setString(8, user.getPassword());
+            preparedStatement.setTimestamp(9, user.getDateTime());
+            preparedStatement.setString(10,user.getTypeUser());
 
             // Exécuter la requête
             preparedStatement.executeUpdate();
@@ -102,6 +99,7 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public UserEntity getUserById(Long userId) {
+
         return null;
     }
 
@@ -130,7 +128,6 @@ public class UserDaoImp implements UserDao {
             throw new DAOException( e );
         }
         return users;
-
     }
 
     @Override
@@ -144,7 +141,47 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
-    public boolean isValidUser(String username, String password) {
-        return false;
+    public UserEntity isValidUser(String email, String password)  throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        UserEntity userEntity = null;
+        ResultSet resultSet = null;
+        try {
+            // Récupérer une connexion depuis la DAOFactory
+            connection = daoFactory.getConnection();
+
+            String sql = "SELECT * FROM user WHERE email = ? and password= ? ";
+            preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, password);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                userEntity = map(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+        return userEntity;
+    }
+
+    @Override
+    public boolean isExist(String email)  throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        boolean exist = true;
+        // Récupérer une connexion depuis la DAOFactory
+        connection = daoFactory.getConnection();
+
+        String sql = "SELECT id_user FROM user WHERE email = ? ";
+        preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, email);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        exist = resultSet.next() ? true : false ;
+        preparedStatement.close();
+
+        return exist ;
     }
 }

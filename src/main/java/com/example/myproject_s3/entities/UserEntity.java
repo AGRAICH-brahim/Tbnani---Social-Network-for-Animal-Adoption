@@ -19,13 +19,9 @@ public class UserEntity {
 
     private String sex;
 
-    private Integer age;
-
     private String telephone;
 
     private String adresse;
-
-    private String username;
 
     private String password;
 
@@ -81,14 +77,6 @@ public class UserEntity {
         this.sex = sex;
     }
 
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
     public String getTelephone() {
         return telephone;
     }
@@ -103,14 +91,6 @@ public class UserEntity {
 
     public void setAdresse(String adresse) {
         this.adresse = adresse;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {

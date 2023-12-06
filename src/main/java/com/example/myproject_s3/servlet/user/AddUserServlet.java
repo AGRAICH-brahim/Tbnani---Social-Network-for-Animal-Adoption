@@ -35,11 +35,9 @@ public class AddUserServlet extends HttpServlet {
         Date dateNaissance = Date.valueOf(dateNaissanceStr);
         String ageStr = request.getParameter("age");
         // Convertir l'âge en Integer
-        Integer age = Integer.parseInt(ageStr);
-        String sex = request.getParameter("sex");
-        String telephone = request.getParameter("tel");
+        String sex = request.getParameter("gender");
+        String telephone = request.getParameter("telephone");
         String adresse = request.getParameter("adresse");
-        String username = request.getParameter("username");
         String password = request.getParameter("password");
         String dateTimeStr = request.getParameter("dateTime");
         String typeUser = request.getParameter("type");
@@ -51,17 +49,32 @@ public class AddUserServlet extends HttpServlet {
         userEntity.setEmail(email);
         userEntity.setDateNaissance(Date.valueOf(dateNaissanceStr));
         userEntity.setSex(sex);
-        userEntity.setAge(age);
         userEntity.setTelephone(telephone);
         userEntity.setAdresse(adresse);
-        userEntity.setUsername(username);
         userEntity.setPassword(password);
         userEntity.setDateTime(new java.sql.Timestamp(System.currentTimeMillis()));
-        userEntity.setTypeUser(typeUser);
+        userEntity.setTypeUser("utilisateur");
 
         // Ajouter l'utilisateur à la base de données
         UserDao userDAO = new UserDaoImp(DAOFactory.getInstance()); // Remplacez DAOFactory.getInstance() par votre méthode pour obtenir une instance de DAOFactory
-        userDAO.addUser(userEntity);
+        try {
+            boolean isExist = userDAO.isExist(email);
+            if (isExist) {
+                String message = "Cet email est déjà utilisé.Essayer un autre";
+                request.setAttribute("message", message);
+                this.getServletContext().getRequestDispatcher("/signup.jsp").forward(request, response);
+
+            } else {
+                userDAO.addUser(userEntity);
+                this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+
+            }
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+
 
         // Rediriger vers une page de confirmation ou autre
         response.sendRedirect("index.jsp");
