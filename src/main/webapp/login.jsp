@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>login</title>
+    <title>Log In</title>
     <link rel="stylesheet" href="./css/login.css">
 </head>
 <body>
@@ -31,7 +31,7 @@
                 <a rel="noopener noreferrer" href="#">Forgot Password ?</a>
             </div>
         </div>
-        <button class="sign">Sign in</button>
+        <button class="sign">Log in</button>
     </form>
     <div class="social-message">
         <div class="line"></div>

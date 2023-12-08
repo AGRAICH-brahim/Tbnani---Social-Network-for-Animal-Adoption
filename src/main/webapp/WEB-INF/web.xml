@@ -21,4 +21,31 @@
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <display-name>ProfileServlet</display-name>
+        <servlet-name>ProfileServlet</servlet-name>
+        <servlet-class>com.example.myproject_s3.servlet.user.ProfileServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProfileServlet</servlet-name>
+        <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <display-name>Dashboard</display-name>
+        <servlet-name>Dashboard</servlet-name>
+        <servlet-class>com.example.myproject_s3.servlet.admin.Dashboard</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Dashboard</servlet-name>
+        <url-pattern>/dashboard</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <display-name>ListeUsersServlet</display-name>
+        <servlet-name>ListeUsersServlet</servlet-name>
+        <servlet-class>com.example.myproject_s3.servlet.admin.ListeUsersServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ListeUsersServlet</servlet-name>
+        <url-pattern>/listeusers</url-pattern>
+    </servlet-mapping>
 </web-app>

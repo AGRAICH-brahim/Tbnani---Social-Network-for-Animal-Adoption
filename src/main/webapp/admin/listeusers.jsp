@@ -1,10 +1,11 @@
 <%--
   Created by IntelliJ IDEA.
   User: DELL
-  Date: 06/12/2023
-  Time: 19:57
+  Date: 08/12/2023
+  Time: 02:50
   To change this template use File | Settings | File Templates.
 --%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.example.myproject_s3.entities.UserEntity" %>
@@ -17,7 +18,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!----======== CSS ======== -->
-    <link rel="stylesheet" href="./css/dashboard.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
 
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -29,7 +30,7 @@ dashboard
 <nav>
     <div class="logo-name">
         <div class="logo-image">
-            <img src="./css/images/LOGO.png" alt="logo">
+            <img src="../css/images/LOGO.png" alt="logo">
         </div>
 
         <span class="logo_name">Tbnani</span>
@@ -49,9 +50,9 @@ dashboard
                 <i class="uil uil-chart"></i>
                 <span class="link-name">Analytics</span>
             </a></li>
-            <li><a href="listeusers">
+            <li><a href="#">
                 <i class="uil uil-thumbs-up"></i>
-                <span class="link-name">Liste Users</span>
+                <span class="link-name">Like</span>
             </a></li>
             <li><a href="#">
                 <i class="uil uil-comments"></i>
@@ -121,70 +122,11 @@ dashboard
             </div>
         </div>
 
-        <div class="activity">
-            <div class="title">
-                <i class="uil uil-clock-three"></i>
-                <span class="text">Recent Activity</span>
-            </div>
 
-            <div class="activity-data">
-                <div class="data names">
-                    <span class="data-title">Name</span>
-                    <span class="data-list">Prem Shahi</span>
-                    <span class="data-list">Deepa Chand</span>
-                    <span class="data-list">Manisha Chand</span>
-                    <span class="data-list">Pratima Shahi</span>
-                    <span class="data-list">Man Shahi</span>
-                    <span class="data-list">Ganesh Chand</span>
-                    <span class="data-list">Bikash Chand</span>
-                </div>
-                <div class="data email">
-                    <span class="data-title">Email</span>
-                    <span class="data-list">premshahi@gmail.com</span>
-                    <span class="data-list">deepachand@gmail.com</span>
-                    <span class="data-list">prakashhai@gmail.com</span>
-                    <span class="data-list">manishachand@gmail.com</span>
-                    <span class="data-list">pratimashhai@gmail.com</span>
-                    <span class="data-list">manshahi@gmail.com</span>
-                    <span class="data-list">ganeshchand@gmail.com</span>
-                </div>
-                <div class="data joined">
-                    <span class="data-title">Joined</span>
-                    <span class="data-list">2022-02-12</span>
-                    <span class="data-list">2022-02-12</span>
-                    <span class="data-list">2022-02-13</span>
-                    <span class="data-list">2022-02-13</span>
-                    <span class="data-list">2022-02-14</span>
-                    <span class="data-list">2022-02-14</span>
-                    <span class="data-list">2022-02-15</span>
-                </div>
-                <div class="data type">
-                    <span class="data-title">Type</span>
-                    <span class="data-list">New</span>
-                    <span class="data-list">Member</span>
-                    <span class="data-list">Member</span>
-                    <span class="data-list">New</span>
-                    <span class="data-list">Member</span>
-                    <span class="data-list">New</span>
-                    <span class="data-list">Member</span>
-                </div>
-                <div class="data status">
-                    <span class="data-title">Status</span>
-                    <span class="data-list">Liked</span>
-                    <span class="data-list">Liked</span>
-                    <span class="data-list">Liked</span>
-                    <span class="data-list">Liked</span>
-                    <span class="data-list">Liked</span>
-                    <span class="data-list">Liked</span>
-                    <span class="data-list">Liked</span>
-                </div>
-
-            </div>
-        </div>
         <div class="table-data">
             <div class="order">
                 <div class="head">
-                    <h3>Recent Orders</h3>
+                    <h3>Recent Users</h3>
                     <i class='bx bx-search' ></i>
                     <i class='bx bx-filter' ></i>
                 </div>
@@ -259,9 +201,10 @@ dashboard
 
                     </tbody>
                 </table>
-    </div>
+            </div>
 </section>
 
 <script src="./css/script.js"></script>
 </body>
 </html>
+
