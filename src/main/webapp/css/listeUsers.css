@@ -10,6 +10,7 @@
     font-family: "Nunito", sans-serif;
 }
 
+
 :root{
     /* ===== Colors ===== */
     --primary-color: #0E4BF1;
@@ -191,6 +192,7 @@ body.dark .activity-data::-webkit-scrollbar-thumb:hover{
 .table-data .todo .todo-list li:last-child {
     margin-bottom: 0;
 }
+
 /* MAIN */
 nav{
     position: fixed;

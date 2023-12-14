@@ -1,10 +1,12 @@
 package com.example.myproject_s3.entities;
 
+import java.util.Base64;
+
 public class PhotoEntity {
     private int IdPhoto;
     private int IdAnimal;
     private int IdOffre;
-    private String namePhoto;
+    private byte[] photoContent; // Content of the photo as bytes
 
     public int getIdPhoto() {
         return IdPhoto;
@@ -29,12 +31,19 @@ public class PhotoEntity {
     public void setIdOffre(int idOffre) {
         IdOffre = idOffre;
     }
-
-    public String getNamePhoto() {
-        return namePhoto;
+    public byte[] getPhotoContent() {
+        return photoContent;
     }
 
-    public void setNamePhoto(String namePhoto) {
-        this.namePhoto = namePhoto;
+    public void setPhotoContent(byte[] photoContent) {
+
+        this.photoContent = photoContent;
+    }
+    public String getBase64EncodedContent() {
+        if (photoContent != null) {
+            return Base64.getEncoder().encodeToString(photoContent);
+        } else {
+            return null;
+        }
     }
 }

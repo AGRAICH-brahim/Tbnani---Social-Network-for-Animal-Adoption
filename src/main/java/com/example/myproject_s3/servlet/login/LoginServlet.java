@@ -51,9 +51,11 @@ public class LoginServlet extends HttpServlet {
             String  accountType = userEntity.getTypeUser() ;
             if(accountType.equals("utilisateur")){
                 request.setAttribute("user",userEntity);
-                this.getServletContext().getRequestDispatcher("/accueil.jsp").forward(request, response);
+                response.sendRedirect("http://localhost:8081/accueil");
             } else if(accountType.equals("admin")) {
-                this.getServletContext().getRequestDispatcher("/dashboard.jsp").forward(request, response);
+                response.sendRedirect("http://localhost:8081/dashboard");
+
+                //this.getServletContext().getRequestDispatcher("/dashboard.jsp").forward(request, response);
             }
         } else {
             String message = "Email et/ou Mot de passe incorrect(s)";

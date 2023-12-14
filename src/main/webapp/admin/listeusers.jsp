@@ -18,7 +18,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!----======== CSS ======== -->
-    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/listeUsers.css">
 
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -38,7 +38,7 @@ dashboard
 
     <div class="menu-items">
         <ul class="nav-links">
-            <li><a href="#">
+            <li><a href="dashboard">
                 <i class="uil uil-estate"></i>
                 <span class="link-name">Dahsboard</span>
             </a></li>
@@ -50,9 +50,9 @@ dashboard
                 <i class="uil uil-chart"></i>
                 <span class="link-name">Analytics</span>
             </a></li>
-            <li><a href="#">
+            <li><a href="listeusers">
                 <i class="uil uil-thumbs-up"></i>
-                <span class="link-name">Like</span>
+                <span class="link-name">Liste users</span>
             </a></li>
             <li><a href="#">
                 <i class="uil uil-comments"></i>
@@ -65,7 +65,7 @@ dashboard
         </ul>
 
         <ul class="logout-mode">
-            <li><a href="#">
+            <li><a href="logout">
                 <i class="uil uil-signout"></i>
                 <span class="link-name">Logout</span>
             </a></li>
@@ -130,10 +130,15 @@ dashboard
                     <i class='bx bx-search' ></i>
                     <i class='bx bx-filter' ></i>
                 </div>
-                <table>
+                <table  data-toggle="table"
+                        data-search="true"
+                        data-filter-control="true"
+                        data-show-export="true"
+                        data-click-to-select="true"
+                        data-toolbar="#toolbar">
                     <thead>
                     <tr>
-                        <th>User</th>
+                        <th >User</th>
                         <th>Email</th>
                         <th>Telephone</th>
                         <th>address</th>
@@ -153,47 +158,143 @@ dashboard
                                 <td>${user.adresse}</td>
                                 <td>${user.telephone}</td>
                                 <td>${user.sex}</td>
-                                <td><span class="status completed">Completed</span><button>
-                                    <span>Continue</span>
-                                    <svg width="34" height="34" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <circle cx="37" cy="37" r="35.5" stroke="black" stroke-width="3"></circle>
-                                        <path d="M25 35.5C24.1716 35.5 23.5 36.1716 23.5 37C23.5 37.8284 24.1716 38.5 25 38.5V35.5ZM49.0607 38.0607C49.6464 37.4749 49.6464 36.5251 49.0607 35.9393L39.5147 26.3934C38.9289 25.8076 37.9792 25.8076 37.3934 26.3934C36.8076 26.9792 36.8076 27.9289 37.3934 28.5147L45.8787 37L37.3934 45.4853C36.8076 46.0711 36.8076 47.0208 37.3934 47.6066C37.9792 48.1924 38.9289 48.1924 39.5147 47.6066L49.0607 38.0607ZM25 38.5L48 38.5V35.5L25 35.5V38.5Z" fill="black"></path>
-                                    </svg>
-                                    <style>
-                                        button {
-                                            cursor: pointer;
-                                            font-weight: 400;
-                                            font-family: Helvetica,"sans-serif";
-                                            transition: all .2s;
-                                            border-radius: 100px;
-                                            background: #cfef00;
-                                            border: 1px solid transparent;
-                                            display: flex;
-                                            align-items: center;
-                                            font-size: 12px;
-                                        }
+                                <td>
+                                    <div class="supprimer">
+                                        <form action="DeleteUser" method="post">
+                                            <input type="hidden" name="userIdToDelete" value="${user.idUser}">
+                                            <button class="noselect"><span class="text">Delete</span><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"></path></svg></span></button>
+                                        </form>
+                                        <form action="accueil" method="post">
+                                            <input type="hidden" value="${user.idUser}">
+                                            <button class="btn" style="background: #040f16;">
+                                                <span class="icon">
+                                                    <svg viewBox="0 0 175 80" width="40" height="40">
+                                                        <rect width="80" height="15" fill="#f0f0f0" rx="10"></rect>
+                                                        <rect y="30" width="80" height="15" fill="#f0f0f0" rx="10"></rect>
+                                                        <rect y="60" width="80" height="15" fill="#f0f0f0" rx="10"></rect>
+                                                    </svg>
+                                                </span>
+                                                <span class="text">Log in</span>
+                                            </button>                                        </form>
 
-                                        button:hover {
-                                            background: #c18ee3;
-                                        }
+                                        <style>
+                                            .supprimer {
+                                                display: flex;
+                                                align-items: center;
+                                                gap: 5px;
+                                            }
+                                            .supprimer button {
+                                                width: 80px;
+                                                height: 30px;
+                                                cursor: pointer;
+                                                display: flex;
+                                                align-items: center;
+                                                background: red;
+                                                border: none;
+                                                border-radius: 5px;
+                                                box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+                                                background: #e62222;
+                                            }
 
-                                        button > svg {
-                                            width: 24px;
-                                            margin-left: 10px;
-                                            transition: transform .3s ease-in-out;
-                                        }
+                                            .supprimer button, .supprimer button span {
+                                                transition: 200ms;
+                                            }
 
-                                        button:hover svg {
-                                            transform: translateX(5px);
-                                        }
+                                            .supprimer button .text {
+                                                transform: translateX(5px);
+                                                color: white;
+                                                font-weight: bold;
+                                            }
 
-                                        button:active {
-                                            transform: scale(0.95);
-                                        }
+                                            .supprimer button .icon {
+                                                position: absolute;
+                                                border-left: 1px solid #c41b1b;
+                                                transform: translateX(60px);
+                                                height: 20px;
+                                                width: 20px;
+                                                display: flex;
+                                                align-items: center;
+                                                justify-content: center;
+                                            }
 
+                                            .supprimer button svg {
+                                                width: 15px;
+                                                fill: #eee;
+                                            }
 
-                                    </style>
-                                </button></td>
+                                            .supprimer button:hover {
+                                                background: #ff3636;
+                                            }
+
+                                            .supprimer button:hover .text {
+                                                color: transparent;
+                                            }
+
+                                            .supprimer button:hover .icon {
+                                                width: 80px;
+                                                border-left: none;
+                                                transform: translateX(0);
+                                            }
+
+                                            .supprimer button:focus {
+                                                outline: none;
+                                            }
+
+                                            .supprimer button:active .icon svg {
+                                                transform: scale(0.8);
+                                            }
+                                            .supprimer.btn {
+                                                width: 80px;
+                                                height: 30px;
+                                                border-radius: 5px;
+                                                border: none;
+                                                transition: all 0.5s ease-in-out;
+                                                font-size: 20px;
+                                                font-weight: 500;
+                                                display: flex;
+                                                align-items: center;
+                                                background: #040f16;
+                                                color: #f5f5f5;
+                                            }
+
+                                            .supprimer .btn:hover {
+                                                box-shadow: 0 0 20px 0px #2e2e2e3a;
+                                            }
+
+                                            .supprimer .btn .icon {
+                                                position: absolute;
+                                                height: 20px;
+                                                width: 20px;
+                                                display: flex;
+                                                justify-content: center;
+                                                align-items: center;
+                                                transition: all 0.5s;
+                                            }
+
+                                            .btn .text {
+                                                transform: translateX(25px);
+                                            }
+
+                                            .supprimer .btn:hover .icon {
+                                                width: 80px;
+                                            }
+
+                                            .btn:hover .text {
+                                                transition: all 0.5s;
+                                                opacity: 0;
+                                            }
+
+                                            .btn:focus {
+                                                outline: none;
+                                            }
+
+                                            .btn:active .icon {
+                                                transform: scale(0.85);
+                                            }
+                                        </style>
+                                    </div>
+
+                                    </td>
                             </tr>
                         </c:forEach>
                     </c:if>

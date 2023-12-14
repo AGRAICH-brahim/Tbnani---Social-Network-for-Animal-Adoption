@@ -1,9 +1,13 @@
 package com.example.myproject_s3.entities;
 
+import java.sql.Timestamp;
+
 public class OffreEntity {
     private int IdOffre;
     private int IdProprietaire;
     private int IdAnimal ;
+    private String description;
+    private Timestamp dateTime;
 
     public int getIdOffre() {
         return IdOffre;
@@ -37,5 +41,11 @@ public class OffreEntity {
         this.description = description;
     }
 
-    private String description;
+    public Timestamp getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(Timestamp dateTime) {
+        this.dateTime = dateTime;
+    }
 }

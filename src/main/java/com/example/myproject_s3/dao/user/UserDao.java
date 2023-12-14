@@ -8,10 +8,12 @@ import java.util.List;
 
 public interface UserDao {
     void addUser(UserEntity user);
-    UserEntity getUserById(Long userId);
+    UserEntity getUserById(int userId);
     ArrayList<UserEntity> getAllUsers();
     void updateUser(UserEntity user);
     void deleteUser(Long userId);
     UserEntity isValidUser(String email, String password) throws SQLException;
     public boolean isExist(String email) throws SQLException;
+    UserEntity getUserByIdOffre(int idOffre);
+
 }

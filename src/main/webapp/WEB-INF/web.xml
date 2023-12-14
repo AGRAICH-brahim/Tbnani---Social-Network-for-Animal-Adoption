@@ -48,4 +48,46 @@
         <servlet-name>ListeUsersServlet</servlet-name>
         <url-pattern>/listeusers</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <display-name>AccueilServlet</display-name>
+        <servlet-name>AccueilServlet</servlet-name>
+        <servlet-class>com.example.myproject_s3.servlet.accueil.AccueilServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AccueilServlet</servlet-name>
+        <url-pattern>/accueil</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <display-name>addPostServlet</display-name>
+        <servlet-name>addPostServlet</servlet-name>
+        <servlet-class>com.example.myproject_s3.servlet.posterOffre.addPostServlet</servlet-class>
+        <multipart-config>
+            <location>C:\Users\DELL\IdeaProjects\MyProject_s3\src\main\webapp\upload</location> <!-- A adapter chez vous -->
+            <max-file-size>10485760</max-file-size> <!-- 10 Mo -->
+            <max-request-size>52428800</max-request-size> <!-- 5 x 10 Mo -->
+            <file-size-threshold>1048576</file-size-threshold> <!-- 1 Mo -->
+        </multipart-config>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addPostServlet</servlet-name>
+        <url-pattern>/posterOffre</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <display-name>DeleteUserServlet</display-name>
+        <servlet-name>DeleteUserServlet</servlet-name>
+        <servlet-class>com.example.myproject_s3.servlet.user.DeleteUserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteUserServlet</servlet-name>
+        <url-pattern>/DeleteUser</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <display-name>LogOutServlet</display-name>
+        <servlet-name>LogOutServlet</servlet-name>
+        <servlet-class>com.example.myproject_s3.servlet.logout.LogOutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogOutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
 </web-app>

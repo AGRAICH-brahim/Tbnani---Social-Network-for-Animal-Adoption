@@ -9,7 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class UserDaoImp implements UserDao {
 
@@ -78,6 +77,7 @@ public class UserDaoImp implements UserDao {
             e.printStackTrace(); // Vous pouvez remplacer cela par une gestion plus appropriée des exceptions
         } finally {
             // Fermer les ressources
+            ResultSet resultSet = null;
             closeResources(preparedStatement, connection);
         }
     }
@@ -96,11 +96,29 @@ public class UserDaoImp implements UserDao {
         }
     }
 
-
+    private static final String SQL_SELECT_PAR_ID = "SELECT * FROM user where id_user = ? ";
     @Override
-    public UserEntity getUserById(Long userId) {
+    public UserEntity getUserById(int userId) {
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        UserEntity userEntity = null;
 
-        return null;
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = daoFactory.getConnection();
+            preparedStatement = initRequestPrepare( connexion, SQL_SELECT_PAR_ID , userId);
+            resultSet = preparedStatement.executeQuery();
+            /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+            /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+            if (resultSet.next()) {
+                userEntity = map(resultSet);
+                System.out.println(resultSet.getString("nom"));
+            }
+        } catch ( SQLException e ) {
+            throw new DAOException( e );
+        }
+        return userEntity;
     }
 
     @Override
@@ -134,11 +152,26 @@ public class UserDaoImp implements UserDao {
     public void updateUser(UserEntity user) {
 
     }
+    private static final String SQL_DELETE_USER = "DELETE FROM user WHERE id_user = ?";
 
     @Override
     public void deleteUser(Long userId) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
 
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = connection.prepareStatement(SQL_DELETE_USER);
+            preparedStatement.setLong(1, userId);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Error deleting user with ID: " + userId, e);
+        } finally {
+            closeResources(preparedStatement, connection);
+        }
     }
+
 
     @Override
     public UserEntity isValidUser(String email, String password)  throws SQLException {
@@ -183,5 +216,32 @@ public class UserDaoImp implements UserDao {
         preparedStatement.close();
 
         return exist ;
+    }
+    private static final String SQL_SELECT_PAR_ID_OFFRE = "SELECT u.* FROM user u " +
+            "JOIN offre o ON u.id_user = o.id_proprietaire " +
+            "WHERE o.id_offre = ?";
+
+    @Override
+    public UserEntity getUserByIdOffre(int idOffre) {
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        UserEntity userOffreEntity = null;
+
+        try {
+            connexion = daoFactory.getConnection();
+            preparedStatement = initRequestPrepare(connexion, SQL_SELECT_PAR_ID_OFFRE, idOffre);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                userOffreEntity = map(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            closeResources(preparedStatement, connexion);
+        }
+
+        return userOffreEntity;
     }
 }
