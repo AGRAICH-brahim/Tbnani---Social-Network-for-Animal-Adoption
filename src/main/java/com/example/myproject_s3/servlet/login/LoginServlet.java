@@ -46,7 +46,7 @@ public class LoginServlet extends HttpServlet {
         if(userEntity != null){
 
             session.setAttribute("sessionuser",userEntity.getIdUser());
-
+            session.setAttribute("infoUser",userEntity);
             //Vérifiez si est un médecin ou patient et dirige chacun vers sa espace
             String  accountType = userEntity.getTypeUser() ;
             if(accountType.equals("utilisateur")){

@@ -40,6 +40,24 @@
         <url-pattern>/dashboard</url-pattern>
     </servlet-mapping>
     <servlet>
+        <display-name>ContentServlet</display-name>
+        <servlet-name>ContentServlet</servlet-name>
+        <servlet-class>com.example.myproject_s3.servlet.admin.ContentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ContentServlet</servlet-name>
+        <url-pattern>/Content</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <display-name>DeletePostServlet</display-name>
+        <servlet-name>DeletePostServlet</servlet-name>
+        <servlet-class>com.example.myproject_s3.servlet.admin.DeletePostServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeletePostServlet</servlet-name>
+        <url-pattern>/Deleteposte</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <display-name>ListeUsersServlet</display-name>
         <servlet-name>ListeUsersServlet</servlet-name>
         <servlet-class>com.example.myproject_s3.servlet.admin.ListeUsersServlet</servlet-class>
@@ -63,14 +81,42 @@
         <servlet-class>com.example.myproject_s3.servlet.posterOffre.addPostServlet</servlet-class>
         <multipart-config>
             <location>C:\Users\DELL\IdeaProjects\MyProject_s3\src\main\webapp\upload</location> <!-- A adapter chez vous -->
-            <max-file-size>10485760</max-file-size> <!-- 10 Mo -->
-            <max-request-size>52428800</max-request-size> <!-- 5 x 10 Mo -->
-            <file-size-threshold>1048576</file-size-threshold> <!-- 1 Mo -->
+            <max-file-size>104857600</max-file-size> <!-- 10 Mo -->
+            <max-request-size>524288000</max-request-size> <!-- 5 x 10 Mo -->
+            <file-size-threshold>10485760</file-size-threshold> <!-- 1 Mo -->
         </multipart-config>
     </servlet>
     <servlet-mapping>
         <servlet-name>addPostServlet</servlet-name>
         <url-pattern>/posterOffre</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <display-name>editOffreFormServlet</display-name>
+        <servlet-name>editOffreFormServlet</servlet-name>
+        <servlet-class>com.example.myproject_s3.servlet.offre.editOffreFormServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>editOffreFormServlet</servlet-name>
+        <url-pattern>/editOffreForm</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <display-name>DeleteOffreServlet</display-name>
+        <servlet-name>DeleteOffreServlet</servlet-name>
+        <servlet-class>com.example.myproject_s3.servlet.offre.DeleteOffreServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteOffreServlet</servlet-name>
+        <url-pattern>/DeleteOffre</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <display-name>EditOffreServlet</display-name>
+        <servlet-name>EditOffreServlet</servlet-name>
+        <servlet-class>com.example.myproject_s3.servlet.posterOffre.EditOffreServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EditOffreServlet</servlet-name>
+        <url-pattern>/EditOffre</url-pattern>
     </servlet-mapping>
     <servlet>
         <display-name>DeleteUserServlet</display-name>
@@ -89,5 +135,59 @@
     <servlet-mapping>
         <servlet-name>LogOutServlet</servlet-name>
         <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <display-name>VisitProfileServlet</display-name>
+        <servlet-name>VisitProfileServlet</servlet-name>
+        <servlet-class>com.example.myproject_s3.servlet.visitprofileuser.VisitProfileServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>VisitProfileServlet</servlet-name>
+        <url-pattern>/profileuser</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <display-name>UserSettingServlet</display-name>
+        <servlet-name>UserSettingServlet</servlet-name>
+        <servlet-class>com.example.myproject_s3.servlet.usersetting.UserSettingServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserSettingServlet</servlet-name>
+        <url-pattern>/UserSetting</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <display-name>EditNumberServlet</display-name>
+        <servlet-name>EditNumberServlet</servlet-name>
+        <servlet-class>com.example.myproject_s3.servlet.usersetting.EditNumberServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EditNumberServlet</servlet-name>
+        <url-pattern>/EditNumber</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <display-name>EditInfoServelt</display-name>
+        <servlet-name>EditInfoServelt</servlet-name>
+        <servlet-class>com.example.myproject_s3.servlet.usersetting.EditInfoServelt</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EditInfoServelt</servlet-name>
+        <url-pattern>/EditInfo</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <display-name>UpdateImageServlet</display-name>
+        <servlet-name>UpdateImageServlet</servlet-name>
+        <servlet-class>com.example.myproject_s3.servlet.user.UpdateImageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateImageServlet</servlet-name>
+        <url-pattern>/UpdateImage</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <display-name>addCommentaireServlet</display-name>
+        <servlet-name>addCommentaireServlet</servlet-name>
+        <servlet-class>com.example.myproject_s3.servlet.commentaire.addCommentaireServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addCommentaireServlet</servlet-name>
+        <url-pattern>/addCommentaire</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -32,6 +32,8 @@ public class UserDaoImp implements UserDao {
         userEntity.setPassword(resultSet.getString("password"));
         userEntity.setDateTime(resultSet.getTimestamp("date_time"));
         userEntity.setTypeUser(resultSet.getString("type_user"));
+        userEntity.setImage(resultSet.getBytes("image"));
+
 
         //System.out.println(userEntity);
         return userEntity;
@@ -152,6 +154,73 @@ public class UserDaoImp implements UserDao {
     public void updateUser(UserEntity user) {
 
     }
+
+    @Override
+    public void updateImageUser(UserEntity user) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = daoFactory.getConnection();
+            String sql = "UPDATE user SET image=? WHERE id_user=?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setBytes(1, user.getImage());
+            preparedStatement.setInt(2, user.getIdUser());
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Error adding data to the database", e);
+        } finally {
+            ResultSet resultSet = null;
+            closeResources(preparedStatement, connection);
+        }
+    }
+
+    @Override
+    public void updateContact(UserEntity user) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = daoFactory.getConnection();
+            String sql = "UPDATE user SET telephone=? WHERE id_user=?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, user.getTelephone());
+            preparedStatement.setInt(2, user.getIdUser());
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Error adding data to the database", e);
+        } finally {
+            ResultSet resultSet = null;
+            closeResources(preparedStatement, connection);
+        }
+    }
+    @Override
+    public void updateInfo(UserEntity user) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = daoFactory.getConnection();
+            String sql = "UPDATE user SET nom=?, prenom=?, date_naissance=?, adresse=? WHERE id_user=?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, user.getNom());
+            preparedStatement.setString(2, user.getPrenom());
+            preparedStatement.setDate(3, user.getDateNaissance());
+            preparedStatement.setString(4, user.getAdresse());
+            preparedStatement.setInt(5, user.getIdUser());
+
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Error adding data to the database", e);
+        } finally {
+            ResultSet resultSet = null;
+            closeResources(preparedStatement, connection);
+        }
+    }
+
     private static final String SQL_DELETE_USER = "DELETE FROM user WHERE id_user = ?";
 
     @Override

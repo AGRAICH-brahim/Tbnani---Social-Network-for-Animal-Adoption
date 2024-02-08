@@ -6,6 +6,7 @@ import com.example.myproject_s3.entities.AnimalEntity;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AnimalDaoImp implements AnimalDao {
     private DAOFactory daoFactory;
@@ -21,10 +22,10 @@ public class AnimalDaoImp implements AnimalDao {
         animalEntity.setSexe(resultSet.getString("sexe"));
         animalEntity.setAge(resultSet.getInt("age"));
         animalEntity.setRace(resultSet.getString("race"));
-        animalEntity.setEtatDeSante(resultSet.getString("etatDeSante"));
+        animalEntity.setEtatDeSante(resultSet.getString("etat_de_sante"));
         animalEntity.setDescription(resultSet.getString("description"));
-        animalEntity.setNomAnimal(resultSet.getString("nomAnimal"));
-        animalEntity.setAddress(resultSet.getString("address"));
+        animalEntity.setNomAnimal(resultSet.getString("nom_animal"));
+        animalEntity.setAddress(resultSet.getString("adresse"));
         return animalEntity;
     }
     public static PreparedStatement initRequestPrepare( Connection connexion, String sql, Object... objets ) throws SQLException {
@@ -75,7 +76,7 @@ public class AnimalDaoImp implements AnimalDao {
     }
 
     @Override
-    public AnimalEntity getAnimalById(Long animalId) {
+    public AnimalEntity getAnimalById(int animalId) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -86,7 +87,6 @@ public class AnimalDaoImp implements AnimalDao {
             String sql = "SELECT * FROM animal WHERE id_animal = ?";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setLong(1, animalId);
-
             resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
@@ -99,6 +99,33 @@ public class AnimalDaoImp implements AnimalDao {
         }
 
         return animalEntity;
+    }
+
+    @Override
+    public List<AnimalEntity> getAnimalsByOffre(int offreId) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<AnimalEntity> animals = new ArrayList<>();
+
+        try {
+            connection = daoFactory.getConnection();
+            String sql = "SELECT * FROM animal WHERE id_animal = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, offreId);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                AnimalEntity animalEntity = map(resultSet);
+                animals.add(animalEntity);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            closeResources(resultSet, preparedStatement, connection);
+        }
+
+        return animals;
     }
 
     @Override
@@ -129,12 +156,65 @@ public class AnimalDaoImp implements AnimalDao {
 
     @Override
     public void updateAnimal(AnimalEntity animal) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet generatedKeys = null;
 
+        try {
+            connection = daoFactory.getConnection();
+
+            String sql = "UPDATE animal SET categorie = ?, sexe = ?, age = ?, race = ?, etat_de_sante = ?, description = ?, nom_animal = ?, adresse = ? WHERE id_animal = ?";
+
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, animal.getCategorie());
+            preparedStatement.setString(2, animal.getSexe());
+            preparedStatement.setInt(3, animal.getAge());
+            preparedStatement.setString(4, animal.getRace());
+            preparedStatement.setString(5, animal.getEtatDeSante());
+            preparedStatement.setString(6, animal.getDescription());
+            preparedStatement.setString(7, animal.getNomAnimal());
+            preparedStatement.setString(8, animal.getAddress());
+            preparedStatement.setLong(9, animal.getIdAnimal());
+
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("La mise à jour de l'animal a échoué, aucune ligne modifiée.");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            closeResources(null, preparedStatement, connection);
+        }
     }
 
-    @Override
-    public void deleteOffre(Long animalId) {
 
+    @Override
+    public void deleteAnimal(int animalId) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = this.daoFactory.getConnection();
+            String sql = "DELETE FROM animal WHERE id_animal = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, animalId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Erreur lors de la suppression de l'animal avec l'ID : " + animalId, e);
+        } finally {
+            // Fermez les ressources (PreparedStatement, Connection) dans le bloc finally
+            // pour vous assurer qu'elles sont correctement fermées, même en cas d'exception.
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace(); // Gérer l'erreur de fermeture
+            }
+        }
     }
 
     @Override

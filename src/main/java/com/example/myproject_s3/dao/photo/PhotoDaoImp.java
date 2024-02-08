@@ -2,6 +2,7 @@ package com.example.myproject_s3.dao.photo;
 
 import com.example.myproject_s3.dao.DAOException;
 import com.example.myproject_s3.dao.DAOFactory;
+import com.example.myproject_s3.entities.OffreEntity;
 import com.example.myproject_s3.entities.PhotoEntity;
 
 import java.sql.Connection;
@@ -57,10 +58,31 @@ public class PhotoDaoImp implements PhotoDao{
         }
     }
 
-
+    private static final String SQL_SELECT_OFFRE_BY_ID = "SELECT * FROM photo WHERE id_offre = ?";
     @Override
     public PhotoEntity getPhotoById(int photoId) {
-        return null;
+
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        PhotoEntity photoEntity = null;
+
+        try {
+            connection = daoFactory.getConnection();
+            preparedStatement = initRequestPrepare(connection, SQL_SELECT_OFFRE_BY_ID, photoId);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                photoEntity = map(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Error getting offre by ID: " + photoId, e);
+        } finally {
+            closeResources(resultSet, preparedStatement, connection);
+        }
+
+        return photoEntity;
     }
 
     @Override
@@ -102,12 +124,57 @@ public class PhotoDaoImp implements PhotoDao{
 
     @Override
     public void updatePhoto(PhotoEntity photo) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
 
+        try {
+            connection = daoFactory.getConnection();
+
+            String sql = "UPDATE photo SET  file = ? WHERE id_offre = ?";
+            preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setBytes(1, photo.getPhotoContent());
+            preparedStatement.setInt(2, photo.getIdOffre());
+
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new DAOException("La mise à jour de la photo a échoué, aucune ligne modifiée.");
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Erreur lors de la mise à jour de la photo dans la base de données", e);
+        } finally {
+            closeResources(null, preparedStatement, connection);
+        }
     }
+
 
     @Override
     public void deletePhoto(int photoId) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
 
+        try {
+            connection = this.daoFactory.getConnection();
+            String sql = "DELETE FROM photo WHERE id_offre = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, photoId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Erreur lors de la suppression de la photo avec l'ID : " + photoId, e);
+        } finally {
+            // Fermez les ressources (PreparedStatement, Connection) dans le bloc finally
+            // pour vous assurer qu'elles sont correctement fermées, même en cas d'exception.
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace(); // Gérer l'erreur de fermeture
+            }
+        }
     }
 
     // Méthode utilitaire pour fermer les ressources JDBC

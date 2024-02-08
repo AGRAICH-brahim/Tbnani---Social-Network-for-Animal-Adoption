@@ -70,7 +70,7 @@ public class OffreDaoImp implements OffreDao{
     private static final String SQL_SELECT_OFFRE_BY_ID = "SELECT * FROM offre WHERE id_offre = ?";
 
     @Override
-    public OffreEntity getOffreById(Long offreId) {
+    public OffreEntity getOffreById(int offreId) {
 
 
             Connection connection = null;
@@ -105,6 +105,7 @@ public class OffreDaoImp implements OffreDao{
             connection = daoFactory.getConnection();
             String sql = "SELECT * FROM offre where id_proprietaire = ?";
             preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, offreId);  // Ajoutez cette ligne pour spécifier la valeur du paramètre
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -149,12 +150,58 @@ public class OffreDaoImp implements OffreDao{
 
     @Override
     public void updateOffre(OffreEntity offre) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
 
+        try {
+            connection = daoFactory.getConnection();
+
+            String sql = "UPDATE offre SET   description = ?, timestamp = ? WHERE id_offre = ?";
+            preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setString(1, offre.getDescription());
+            preparedStatement.setTimestamp(2, offre.getDateTime());
+            preparedStatement.setLong(3, offre.getIdOffre());
+
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new DAOException("La mise à jour de l'offre a échoué, aucune ligne modifiée.");
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            closeResources(null, preparedStatement, connection);
+        }
     }
 
-    @Override
-    public void deleteOffre(Long offreId) {
 
+    @Override
+    public void deleteOffre(int offreId) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = this.daoFactory.getConnection();
+            String sql = "DELETE FROM offre WHERE id_offre = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, offreId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Erreur lors de la suppression de l'offre avec l'ID : " + offreId, e);
+        } finally {
+            // Fermez les ressources (PreparedStatement, Connection) dans le bloc finally
+            // pour vous assurer qu'elles sont correctement fermées, même en cas d'exception.
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace(); // Gérer l'erreur de fermeture
+            }
+        }
     }
 
     // Méthode utilitaire pour fermer les ressources JDBC

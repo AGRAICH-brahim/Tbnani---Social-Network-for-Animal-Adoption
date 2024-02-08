@@ -7,13 +7,14 @@ import java.util.List;
 public interface AnimalDao {
     Long addAnimal(AnimalEntity animal);
 
-    AnimalEntity getAnimalById(Long animalId);
+    AnimalEntity getAnimalById(int animalId);
+    List<AnimalEntity> getAnimalsByOffre(int offreId);
 
     List<AnimalEntity> getAllAnimals();
 
     void updateAnimal(AnimalEntity animal);
 
-    void deleteOffre(Long animalId);
+    void deleteAnimal(int animalId);
     AnimalEntity recupererDernierAnimal();
 
 }

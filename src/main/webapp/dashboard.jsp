@@ -37,11 +37,11 @@ dashboard
 
     <div class="menu-items">
         <ul class="nav-links">
-            <li><a href="#">
+            <li><a href="dashboard">
                 <i class="uil uil-estate"></i>
                 <span class="link-name">Dahsboard</span>
             </a></li>
-            <li><a href="#">
+            <li><a href="Content">
                 <i class="uil uil-files-landscapes"></i>
                 <span class="link-name">Content</span>
             </a></li>
@@ -92,7 +92,7 @@ dashboard
             <input type="text" placeholder="Search here...">
         </div>
 
-        <img src="images/profile.jpg" alt="">
+        <img src="css/images/img_4.png" alt="">
     </div>
 
     <div class="dash-content">

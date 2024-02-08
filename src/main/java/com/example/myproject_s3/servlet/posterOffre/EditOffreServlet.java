@@ -11,6 +11,7 @@ import com.example.myproject_s3.entities.AnimalEntity;
 import com.example.myproject_s3.entities.OffreEntity;
 import com.example.myproject_s3.entities.PhotoEntity;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 
@@ -20,8 +21,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 
-@WebServlet(name = "addPostServlet", value = "/addPostServlet")
-public class addPostServlet extends HttpServlet {
+@WebServlet(name = "EditOffreServlet", value = "/EditOffreServlet")
+@MultipartConfig
+public class EditOffreServlet extends HttpServlet {
     private OffreDao offreDao;
     private AnimalDao animalDao;
     private PhotoDao photoDao;
@@ -34,14 +36,12 @@ public class addPostServlet extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String path=request.getServletPath();
-        if (path.equals("/posterOffre")) {
-            request.getRequestDispatcher("./post/posterOffre.jsp").forward(request, response);
-        }
+
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         HttpSession session = request.getSession();
         Connection connection = null; // Déclarer la variable connection ici
 
@@ -62,7 +62,17 @@ public class addPostServlet extends HttpServlet {
             // Créer un objet UserEntity avec les données du formulaire
             offreEntity.setDescription(request.getParameter("description"));
             offreEntity.setDateTime(new java.sql.Timestamp(System.currentTimeMillis()));
-            offreEntity.setIdProprietaire(iduser);
+            // Vérifier si les paramètres idoffre et idanimal ne sont pas nuls avant de les convertir
+            String idOffreParam = request.getParameter("idoffre");
+            String idAnimalParam = request.getParameter("idanimal");
+
+            if (idOffreParam != null && idAnimalParam != null) {
+                offreEntity.setIdOffre(Integer.parseInt(idOffreParam));
+                animalEntity.setIdAnimal(Integer.parseInt(idAnimalParam));
+            } else {
+                // Gérer le cas où l'un ou les deux paramètres sont nuls
+                // Vous pouvez choisir une valeur par défaut ou gérer différemment selon vos besoins
+            }
 
             animalEntity.setCategorie(request.getParameter("categorieAnimal"));
             animalEntity.setSexe(request.getParameter("sexeAnimal"));
@@ -71,7 +81,7 @@ public class addPostServlet extends HttpServlet {
                 animalEntity.setAge(Integer.parseInt(ageAnimalParam));
             } else {
                 // Gérer le cas où ageAnimalParam est nul ou vide
-                animalEntity.setAge(Integer.parseInt("1"));
+                animalEntity.setAge(1); // Valeur par défaut ou toute autre valeur par défaut que vous souhaitez
             }
             animalEntity.setRace(request.getParameter("raceAnimal"));
             animalEntity.setEtatDeSante(request.getParameter("etatDeSanteAnimal"));
@@ -81,27 +91,25 @@ public class addPostServlet extends HttpServlet {
 
             // Récupérer l'image depuis la requête (vérifier si elle n'est pas nulle)
             Part imagePart = request.getPart("image");
+            // Enregistrer l'animal
+            offreDao.updateOffre(offreEntity);
+            animalDao.updateAnimal(animalEntity);
+
             if (imagePart != null) {
-
-                // Enregistrer l'animal
-                Long idAnimal = animalDao.addAnimal(animalEntity);
-
-                // Enregistrer l'offre
-                offreEntity.setIdAnimal(Math.toIntExact(idAnimal));
-                Long idOffre = offreDao.addOffre(offreEntity);
-
                 // Enregistrer l'image
                 InputStream imageInputStream = imagePart.getInputStream();
                 byte[] imageBytes = imageInputStream.readAllBytes();
+                if (imageBytes != null && imageBytes.length > 0) {
+                    PhotoEntity photo = new PhotoEntity();
+                    photo.setPhotoContent(imageBytes);
+                    photo.setIdOffre(Integer.parseInt(request.getParameter("idoffre")));
 
-                PhotoEntity photo = new PhotoEntity();
-                photo.setIdAnimal(Math.toIntExact(idAnimal));
-                photo.setIdOffre(Math.toIntExact(idOffre));
-                photo.setPhotoContent(imageBytes);  // Suppose que votre champ namePhoto dans PhotoEntity est de type Blob
-                photoDao.addPhoto(photo);
+                    // Mettre à jour la photo uniquement si le tableau d'octets n'est pas vide
+                    photoDao.updatePhoto(photo);
+                }
                 // Commit de la transaction
-                connection.commit();
             }
+            connection.commit();
         } catch (SQLException | IOException e) {
             // Gérer les exceptions (rollback)
             if (connection != null) {
@@ -123,7 +131,7 @@ public class addPostServlet extends HttpServlet {
                 }
             }
         }
-        response.sendRedirect("http://localhost:8081/accueil");
+        response.sendRedirect("http://localhost:8081/profile");
 
     }
 }

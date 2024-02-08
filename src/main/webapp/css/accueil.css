@@ -34,7 +34,7 @@ body{
     color: var(--color-dark);
     background: var(--color-light);
     overflow-x: hidden;
-    font-family: "Nunito";
+    font-family: "Nunito", serif;
 
 }
 
@@ -107,7 +107,7 @@ nav .container{
 .search-bar{
     background: var(--color-light);
     border-radius: var(--border-radius);
-    padding: var(--seacrh-padding);
+    padding: var(--search-padding);
 }
 .search-bar input[type="search"]{
     background: transparent;
@@ -319,6 +319,7 @@ main .container .left .profle{
     overflow: hidden;
     margin: 0.7rem 0;
 }
+
 .middle .feed .action-button{
     display: flex;
     justify-content: space-between;
@@ -411,12 +412,6 @@ main .container .left .profle{
     border-radius: 50%;
 }
 
-.right .messages .message{
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    align-items: start;
-}
 
 .right .messages .message:last-child{
     margin: 0;
@@ -425,6 +420,7 @@ main .container .left .profle{
 .right .messages .message p{
     font-size: 0.8rem;
 }
+
 
 .right .messages .message .profile-pic .active{
     width: 0.8rem;

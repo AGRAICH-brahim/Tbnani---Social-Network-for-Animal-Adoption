@@ -1,8 +1,9 @@
-package com.example.myproject_s3.servlet.user;
+package com.example.myproject_s3.servlet.usersetting;
 
 import com.example.myproject_s3.dao.DAOFactory;
 import com.example.myproject_s3.dao.user.UserDao;
 import com.example.myproject_s3.dao.user.UserDaoImp;
+import com.example.myproject_s3.entities.UserEntity;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -12,8 +13,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebServlet(name = "DeleteUserServlet", value = "/DeleteUserServlet")
-public class DeleteUserServlet extends HttpServlet {
+@WebServlet(name = "EditNumberServlet", value = "/EditNumberServlet")
+public class EditNumberServlet extends HttpServlet {
     private UserDao userDao;
 
     public void init() throws ServletException {
@@ -23,17 +24,22 @@ public class DeleteUserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Récupérer l'ID de l'utilisateur à supprimer depuis la requête (ajustez cela selon votre logique)
-        Long userIdToDelete = Long.parseLong(request.getParameter("userIdToDelete"));
 
-        // Appeler la méthode deleteUser de votre UserDao
-        userDao.deleteUser(userIdToDelete);
+        UserEntity userEntity = new UserEntity();
 
-        response.sendRedirect("http://localhost:8081/listeusers");
+        String telephone = request.getParameter("telephone");
+        String iduser = request.getParameter("iduser");
+
+        userEntity.setTelephone(telephone);
+        userEntity.setIdUser(Integer.parseInt(iduser));
+
+        userDao.updateContact(userEntity);
+
+        response.sendRedirect("http://localhost:8081/UserSetting");
+
     }
 }

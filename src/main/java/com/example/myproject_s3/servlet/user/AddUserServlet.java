@@ -26,6 +26,7 @@ public class AddUserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         // Récupérer les données du formulaire
         String nom = request.getParameter("nom");
         String prenom = request.getParameter("prenom");
@@ -73,9 +74,6 @@ public class AddUserServlet extends HttpServlet {
 
             e.printStackTrace();
         }
-
-
-
         // Rediriger vers une page de confirmation ou autre
         response.sendRedirect("index.jsp");
 

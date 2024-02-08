@@ -7,7 +7,7 @@ import java.util.List;
 public interface OffreDao {
     Long addOffre(OffreEntity offre);
 
-    OffreEntity getOffreById(Long offreId);
+    OffreEntity getOffreById(int offreId);
 
     List<OffreEntity> getOffresByIdUser(Integer offreId);
 
@@ -15,6 +15,6 @@ public interface OffreDao {
 
     void updateOffre(OffreEntity offre);
 
-    void deleteOffre(Long offreId);
+    void deleteOffre(int offreId);
 
 }

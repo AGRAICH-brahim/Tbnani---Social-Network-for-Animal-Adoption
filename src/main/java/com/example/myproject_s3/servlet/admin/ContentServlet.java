@@ -1,4 +1,4 @@
-package com.example.myproject_s3.servlet.accueil;
+package com.example.myproject_s3.servlet.admin;
 
 import com.example.myproject_s3.dao.DAOFactory;
 import com.example.myproject_s3.dao.animal.AnimalDao;
@@ -12,6 +12,7 @@ import com.example.myproject_s3.dao.photo.PhotoDaoImp;
 import com.example.myproject_s3.dao.user.UserDao;
 import com.example.myproject_s3.dao.user.UserDaoImp;
 import com.example.myproject_s3.entities.*;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -26,8 +27,8 @@ import java.util.List;
 import java.util.Map;
 
 
-@WebServlet(name = "AccueilServlet", value = "/AccueilServlet")
-public class AccueilServlet extends HttpServlet {
+@WebServlet(name = "ContentServlet", value = "/ContentServlet")
+public class ContentServlet extends HttpServlet {
     private UserDao userDao;
     private OffreDao offreDao;
     private PhotoDao photoDao;
@@ -85,11 +86,13 @@ public class AccueilServlet extends HttpServlet {
         request.setAttribute("usersMap", usersMap);
         request.setAttribute("commentaires", allCommentaires);
 
-        request.getRequestDispatcher("accueil.jsp").forward(request, response);
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("admin/content.jsp");
+        dispatcher.forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
+
     }
 }

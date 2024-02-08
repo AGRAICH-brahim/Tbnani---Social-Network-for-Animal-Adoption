@@ -15,5 +15,8 @@ public interface UserDao {
     UserEntity isValidUser(String email, String password) throws SQLException;
     public boolean isExist(String email) throws SQLException;
     UserEntity getUserByIdOffre(int idOffre);
+    void updateImageUser(UserEntity user);
+    void updateInfo(UserEntity user);
+    void updateContact(UserEntity user);
 
 }

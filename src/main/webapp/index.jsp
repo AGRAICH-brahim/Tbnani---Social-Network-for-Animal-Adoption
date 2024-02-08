@@ -14,8 +14,8 @@
             <ul>
                 <img  src="./css/images/LOGO.png"/>
                 <li><a href="#">Accueil</a></li>
-                <li><a href="#">Voitures</a></li>
-                <li><a href="#">Réservations</a></li>
+                <li><a href="#">Notre Réseau</a></li>
+                <li><a href="#">Avantages </a></li>
                 <li><a href="#">À propos</a></li>
                 <li><a href="#">Contact</a></li>
             </ul>
@@ -34,7 +34,9 @@
                 Découvrez les nombreux avantages de notre réseau social et trouvez votre nouveau compagnon.</p>
         </div>
         <div class="container1_3">
-            <button href="">Commencer l'Adoption</button>
+            <form action="login">
+                <button>Commencer l'Adoption</button>
+            </form>
         </div>
     </div>
 </div>
@@ -142,7 +144,7 @@
         <div class="container3_2">
             <div class="card1">
                 <div class="image1">
-                    <img src="./css/images/Beagle_portrait_Camry.jpg" alt="">
+                    <img style="width: 100%; height: 130px;"  src="./css/images/img_3.png" alt="">
                 </div>
                 <div class="nameanimal">
                     <h3 >Chiens</h3>
@@ -155,7 +157,7 @@
             </div>
             <div class="card1">
                 <div class="image1">
-                    <img src="./Beagle_portrait_Camry.jpg" alt="">
+                    <img style="width: 100%; height: 130px;" src="./css/images/img_1.png" alt="">
                 </div>
                 <div class="nameanimal">
                     <h3>CHAT</h3>
@@ -168,7 +170,7 @@
             </div>
             <div class="card1">
                 <div class="image1">
-                    <img src="./css/images/Beagle_portrait_Camry.jpg" alt="">
+                    <img style="width: 100%; height: 130px;" src="./css/images/img_2.png" alt="">
                 </div>
                 <div class="nameanimal">
                     <h3>LION</h3>

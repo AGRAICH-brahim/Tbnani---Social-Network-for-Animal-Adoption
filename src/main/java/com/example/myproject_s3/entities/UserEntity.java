@@ -28,6 +28,8 @@ public class UserEntity {
     private Timestamp dateTime;
 
     private String typeUser;
+    private byte[] image; // Content of the photo as bytes
+
 
     public int getIdUser() {
         return idUser;
@@ -115,5 +117,13 @@ public class UserEntity {
 
     public void setTypeUser(String typeUser) {
         this.typeUser = typeUser;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }
