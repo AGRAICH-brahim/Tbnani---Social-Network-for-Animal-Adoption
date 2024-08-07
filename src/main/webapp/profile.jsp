@@ -32,7 +32,7 @@
             rel="stylesheet"
             href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css"
     />
-</head>
+</head> 
 <body>
 <nav>
     <div class="container">
@@ -430,6 +430,9 @@
         bottom: 0;
         transition: all 0.3s ease-in-out;
         z-index: -1;
+
+
+
     }
     .modal.open {
         opacity: 1;
