@@ -33,7 +33,7 @@ This project was developed during our third semester at ENSIAS, applying our kno
 ### Collaboration Tools
 - **Git** and **GitHub** for version control and collaboration
 
-# 📂 Project Structure
+## 📂 Project Structure
 The project follows the MVC architecture:
 
 - **Model:** Java Beans, Data Access Objects (DAO)
